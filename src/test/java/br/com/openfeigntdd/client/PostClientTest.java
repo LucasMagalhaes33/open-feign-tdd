@@ -9,13 +9,19 @@ import feign.mock.HttpMethod;
 import feign.mock.MockClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 public class PostClientTest {
 
     private static String BASE_URL = "https://jsonplaceholder.typicode.com";
@@ -49,7 +55,30 @@ public class PostClientTest {
     }
 
 
+    @Test
+    public void testUpdateById() {
+        PostDTO mockPostDTO = new PostDTO();
+        when(postClient.updateById(anyInt())).thenReturn((mockPostDTO));
 
+        PostDTO response = postClient.updateById(1);
+
+        verify(postClient).updateById(1);
+
+        assertEquals(mockPostDTO, response.getBody());
+    }
+
+    @Test
+    public void testSave() {
+        PostDTO requestPostDTO = new PostDTO();
+        PostDTO mockPostDTO = new PostDTO();
+        when(postClient.save(requestPostDTO)).thenReturn((mockPostDTO));
+
+        PostDTO response = postClient.save(requestPostDTO);
+
+        verify(postClient).save(requestPostDTO);
+
+        assertEquals(mockPostDTO, response.getBody());
+    }
 
 
 }
