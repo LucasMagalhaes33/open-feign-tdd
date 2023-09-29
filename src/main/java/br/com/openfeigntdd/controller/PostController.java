@@ -5,10 +5,7 @@ import br.com.openfeigntdd.dto.PostDTO;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +24,16 @@ public class PostController {
     @GetMapping(value = "/id/{id}")
     public PostDTO getAllPosts(@PathVariable Integer id) {
         return postClient.getPostById(id);
+    }
+
+    @PutMapping(value = "/posts/{id}")
+    public PostDTO updateById(@RequestParam(value = "id") Integer id){
+        return postClient.updateById(id);
+    }
+
+    @PostMapping(value = "/posts")
+    public PostDTO updateById(@RequestBody PostDTO postDTO){
+        return postClient.save(postDTO);
     }
 
 }
