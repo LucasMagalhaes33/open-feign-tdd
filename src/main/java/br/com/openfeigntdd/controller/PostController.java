@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,11 @@ public class PostController {
     @GetMapping
     public List<PostDTO> getAllPosts(){
         return postClient.getAllPosts();
+    }
+
+    @GetMapping(value = "/id/{id}")
+    public PostDTO getAllPosts(@PathVariable Integer id) {
+        return postClient.getPostById(id);
     }
 
 }
